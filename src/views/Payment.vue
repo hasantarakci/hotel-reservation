@@ -31,15 +31,15 @@
         <div class="payment-credit-info">
           <p class="payment-credit-info-title">Kredi Kartı Bilgileri</p>
           <BrandInput
-            title="Kart Üzerindeki İsim"
-            placeholder="Kartın Üzerindeki İsmi Giriniz"
+            title="İsim Soyisim"
+            placeholder="Kartınızın Üzerindeki İsmi Giriniz"
             class="card-name"
             @onChange="onCardName"
             :value="cardNameValue"
           />
           <BrandInput
-            title="Kartın Numarası"
-            placeholder="Kartın Numarasını Giriniz"
+            title="Kart Numarası"
+            placeholder="Kartınızın Numarasını Giriniz"
             class="card-number"
             type="number"
             @onChange="onCardNumber"
@@ -47,7 +47,7 @@
           />
           <div class="card-info">
             <div class="card-info-date">
-              <h4 class="input-title">Kartın Son Kullanma Tarihi</h4>
+              <h4 class="input-title">Son Kullanma Tarihi</h4>
               <div class="card-info-date-number">
                 <BrandSelect
                   title="Kartın Son Kullanma Tarihi"
@@ -439,6 +439,11 @@ export default {
     background-color: #e6e6e6;
     border-radius: 5px;
     padding: 10px;
+
+    &-title {
+      display: flex;
+      align-items: center;
+    }
 
     &-detail {
       display: grid;
