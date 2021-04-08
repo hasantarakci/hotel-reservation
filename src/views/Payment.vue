@@ -307,15 +307,24 @@ export default {
         localStorage.couponCode = this.couponCode;
         localStorage.couponDiscount = this.couponDiscount;
 
-        Reservations.postReservation(reservation).then((res) => {
-          if (!res || !res.data) {
-            return;
-          }
+        if (localStorage.reservationId) {
+          Reservations.updateReservation(localStorage.reservationId, reservation).then((res) => {
+            if (!res || !res.data) {
+              return;
+            }
+          });
 
-          localStorage.reservationId = res.data.id;
-        });
+          this.$router.push('success');
+        } else {
+          Reservations.postReservation(reservation).then((res) => {
+            if (!res || !res.data) {
+              return;
+            }
 
-        this.$router.push('success');
+            localStorage.reservationId = res.data.id;
+            this.$router.push('success');
+          });
+        }
       }
     },
     onBack() {

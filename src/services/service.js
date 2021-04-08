@@ -34,6 +34,13 @@ class Reservations {
     );
   }
 
+  updateReservation(ID, reservation) {
+    return HttpService.put(
+      `https://5f6d939160cf97001641b049.mockapi.io/tkn/hotel-bookings/${ID}`,
+      reservation,
+    );
+  }
+
   deleteReservation(ID) {
     return HttpService.delete(
       `https://5f6d939160cf97001641b049.mockapi.io/tkn/hotel-bookings/${ID}`,
