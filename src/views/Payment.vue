@@ -384,6 +384,7 @@ export default {
     }
 
     &-card {
+      max-width: 333px;
       width: 100%;
       margin-bottom: 30px;
     }
@@ -547,6 +548,10 @@ export default {
       &-date {
         top: 290px;
         width: 75px;
+      }
+
+      &-card {
+        max-width: unset;
       }
     }
 
