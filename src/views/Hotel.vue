@@ -1,6 +1,6 @@
 <template>
   <div class="hotel">
-    <BrandProcess roomClass="active" />
+    <BrandProcess calendarClass="active" firstLine="active" roomClass="active" />
     <div class="hotel-background">
       <div class="hotel-name">
         <h2 class="hotel-name-title">
@@ -19,7 +19,7 @@
           Yetişkin: <span class="hotel-calendar-content">{{ personValue }}</span>
         </p>
         <p class="hotel-calendar-title">
-          Yetişkin: <span class="hotel-calendar-content">{{ childValue }}</span>
+          Çocuk: <span class="hotel-calendar-content">{{ childValue }}</span>
         </p>
       </div>
     </div>

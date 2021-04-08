@@ -18,7 +18,7 @@
           title="Giriş Tarihi"
           :min="minEntryDate"
           :max="exitDate"
-          :value="checkInValue"
+          :value="entryDate"
           @onChange="onCheckIn"
         />
         <BrandInput
@@ -26,7 +26,7 @@
           type="date"
           title="Çıkış Tarihi"
           :min="minExitDate"
-          :value="checkOutValue"
+          :value="exitDate"
           @onChange="onCheckOut"
         />
         <BrandInput
@@ -79,13 +79,11 @@ export default {
       hotelListPlaceholder: 'Rezervasyon yapmak istediğiniz oteli seçiniz.',
       hotelDetails: [],
       selectedHotel: {},
-      hotelValue: JSON.parse(localStorage.selectedHotel).id || '',
+      hotelValue: '',
       selectedHotelName: '',
       maxAdultSize: '5',
       childStatus: true,
       isErrorMsg: false,
-      checkInValue: '',
-      checkOutValue: '',
       personValue: '1',
       childValue: '0',
       minEntryDate: '',
@@ -143,43 +141,67 @@ export default {
       }
     },
     getHotelList() {
-      Reservations.getHotelList().then((res) => {
-        if (!res || !res.data) {
-          return;
-        }
+      this.hotelList = this.$store.getters.getHotelList;
 
-        res.data.forEach((x) => {
-          x.value = x.hotel_name;
-          delete x.hotel_name;
+      if (!this.hotelList) {
+        Reservations.getHotelList().then((res) => {
+          if (!res || !res.data) {
+            return;
+          }
+
+          res.data.forEach((x) => {
+            x.value = x.hotel_name;
+            delete x.hotel_name;
+          });
+
+          this.hotelList = res.data;
+          this.$store.dispatch('setHotelList', this.hotelList);
         });
-
-        this.hotelList = res.data;
-      });
+      }
+    },
+    getReservation() {
+      if (localStorage.selectedHotel && localStorage.selectedHotelName) {
+        this.selectedHotel = JSON.parse(localStorage.selectedHotel);
+        this.hotelValue = JSON.parse(localStorage.selectedHotel).id;
+        this.selectedHotelName = localStorage.selectedHotelName;
+        this.entryDate = localStorage.entryDate;
+        this.exitDate = localStorage.exitDate;
+      }
     },
     getHotelDetails(val) {
-      Reservations.getHotelDetails().then((res) => {
-        if (!res || !res.data) {
-          return;
-        }
+      let allHotelDetails = this.$store.getters.getAllHotelDetails;
 
-        this.hotelDetails = res.data;
-        this.hotelDetails.forEach((element) => {
-          if (element.id == val) {
-            this.selectedHotel = element;
-            this.childStatus = element.child_status;
-            this.maxAdultSize = String(element.max_adult_size);
-
-            if (this.maxAdultSize < this.personValue) {
-              this.personValue = this.maxAdultSize;
-            }
-
-            this.hotelList.forEach((x) => {
-              if (x.id == val) {
-                this.selectedHotelName = x.value;
-              }
-            });
+      if (allHotelDetails) {
+        this.setHotelDetail(val, allHotelDetails);
+      } else {
+        Reservations.getAllHotelDetails().then((res) => {
+          if (!res || !res.data) {
+            return;
           }
+
+          this.$store.dispatch('setAllHotelDetails', res.data);
+          this.setHotelDetail(val, res.data);
         });
+      }
+    },
+    setHotelDetail(val, value) {
+      this.hotelDetails = value;
+      this.hotelDetails.forEach((element) => {
+        if (element.id == val) {
+          this.selectedHotel = element;
+          this.childStatus = element.child_status;
+          this.maxAdultSize = String(element.max_adult_size);
+
+          if (this.maxAdultSize < this.personValue) {
+            this.personValue = this.maxAdultSize;
+          }
+
+          this.hotelList.forEach((x) => {
+            if (x.id == val) {
+              this.selectedHotelName = x.value;
+            }
+          });
+        }
       });
     },
     getTodayTime() {
@@ -200,7 +222,7 @@ export default {
   created() {
     this.getHotelList();
     this.getTodayTime();
-    console.log(this.hotelValue);
+    this.getReservation();
   },
 };
 </script>

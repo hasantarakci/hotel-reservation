@@ -4,12 +4,12 @@
       :wrapperClass="`reservation-process-item ${calendarClass}`"
       src="https://image.flaticon.com/icons/png/128/42/42446.png"
     />
-    <div class="reservation-process-line"></div>
+    <div :class="`reservation-process-line ${firstLine}`"></div>
     <VueImage
       :wrapperClass="`reservation-process-item ${roomClass}`"
       src="https://image.flaticon.com/icons/png/128/2286/2286105.png"
     />
-    <div class="reservation-process-line"></div>
+    <div :class="`reservation-process-line ${secondLine}`"></div>
     <VueImage
       :wrapperClass="`reservation-process-item ${walletClass}`"
       src="https://image.flaticon.com/icons/png/128/482/482541.png"
@@ -37,6 +37,12 @@ export default {
     walletClass: {
       type: String,
     },
+    firstLine: {
+      type: String,
+    },
+    secondLine: {
+      type: String,
+    },
   },
 };
 </script>
@@ -57,10 +63,10 @@ export default {
       background-color: #ffffff;
       padding: 10px;
       border-radius: 50%;
-      border: 1px solid #000000;
+      border: 2px solid #000000;
 
       &.active {
-        border: 1px solid #2bca0b;
+        border-color: #2bca0b;
       }
 
       img {
@@ -71,8 +77,12 @@ export default {
 
     &-line {
       flex: 1;
-      height: 1px;
+      height: 2px;
       background-color: #000000;
+
+      &.active {
+        background-color: #2bca0b;
+      }
     }
   }
 }

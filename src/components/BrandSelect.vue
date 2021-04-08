@@ -1,5 +1,5 @@
 <template>
-  <select :value="value" class="select" :name="name" :id="id" @change="onChange">
+  <select v-model="innerValue" class="select" :name="name" :id="id" @change="onChange">
     <option value="" selected disabled>{{ placeholder }}</option>
     <option v-for="item in data" :key="item.id" :value="item.id">
       {{ item.value }}
@@ -10,7 +10,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      innerValue: '',
+    };
   },
   props: {
     name: {
@@ -39,6 +41,14 @@ export default {
   methods: {
     onChange(event) {
       this.$emit('onSelect', event.target.value);
+    },
+  },
+  created() {
+    this.innerValue = this.value;
+  },
+  watch: {
+    value(newVal) {
+      this.innerValue = newVal;
     },
   },
 };

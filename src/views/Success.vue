@@ -9,8 +9,8 @@
       </p>
       <div class="success-top-buttons">
         <button @click="newReserv">Yeni Rezervasyon Yap</button>
-        <button>Rezervasyonu Güncelle</button>
-        <button @click="deleteReserv">Rezervasyonu İptal Et</button>
+        <button @click="updateReserv">Rezervasyonu Güncelle</button>
+        <button @click="openModal">Rezervasyonu İptal Et</button>
       </div>
     </div>
 
@@ -34,6 +34,16 @@
         </div>
         <h4 class="success-summary-price-title">TOPLAM TUTAR</h4>
         <h2 class="success-summary-price-value">{{ totalPrice }} TL</h2>
+      </div>
+    </div>
+
+    <div class="success-modal" id="successModal">
+      <div class="success-modal-body">
+        <p>Rezervasyonunuzu iptal etmek istediğinize emin misiniz?</p>
+        <div class="success-modal-body-buttons">
+          <button @click="deleteReserv">Evet</button>
+          <button @click="closeModal">Hayır</button>
+        </div>
       </div>
     </div>
   </div>
@@ -98,6 +108,10 @@ export default {
   components: {},
   methods: {
     newReserv() {
+      localStorage.clear();
+      this.$router.push('/');
+    },
+    updateReserv() {
       this.$router.push('/');
     },
     deleteReserv() {
@@ -105,9 +119,20 @@ export default {
         if (!res || !res.data) {
           return;
         }
-
-        console.log(res.data);
       });
+
+      document.getElementById('successModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+      localStorage.clear();
+      this.$router.push('/');
+    },
+    closeModal() {
+      document.getElementById('successModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    },
+    openModal() {
+      document.getElementById('successModal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
     },
   },
   created() {
@@ -191,6 +216,39 @@ export default {
 
         &:nth-child(4) {
           border-bottom: 2px solid #e6e6e6;
+        }
+      }
+    }
+  }
+
+  &-modal {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 999;
+    display: none;
+
+    &-body {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 30px;
+      text-align: center;
+      background-color: white;
+      box-sizing: border-box;
+      border-radius: 5px;
+
+      &-buttons {
+        display: flex;
+        justify-content: space-around;
+
+        button {
+          width: 100px;
         }
       }
     }

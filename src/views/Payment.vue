@@ -1,6 +1,12 @@
 <template>
   <div class="payment">
-    <BrandProcess walletClass="active" />
+    <BrandProcess
+      calendarClass="active"
+      firstLine="active"
+      roomClass="active"
+      secondLine="active"
+      walletClass="active"
+    />
     <div class="payment-wrapper">
       <div class="payment-credit">
         <BrandInput

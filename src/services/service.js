@@ -7,7 +7,7 @@ class Reservations {
     return HttpService.get('https://5f6d939160cf97001641b049.mockapi.io/tkn/hotels');
   }
 
-  getHotelDetails() {
+  getAllHotelDetails() {
     return HttpService.get('https://5f6d939160cf97001641b049.mockapi.io/tkn/hotel-details');
   }
 
