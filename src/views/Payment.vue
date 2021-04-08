@@ -363,22 +363,24 @@ export default {
     &-number,
     &-date {
       position: absolute;
-      left: 57px;
     }
 
     &-number {
-      top: 195px;
-      width: 407px;
+      left: 35px;
+      top: 115px;
+      width: 285px;
     }
 
     &-name {
-      top: 243px;
+      left: 35px;
+      top: 160px;
       width: 172px;
     }
 
     &-date {
-      top: 290px;
+      top: 160px;
       width: 75px;
+      left: 245px;
     }
 
     &-card {
@@ -520,6 +522,27 @@ export default {
       padding: 20px;
       margin-bottom: 0;
       margin-right: 20px;
+
+      &-name,
+      &-number,
+      &-date {
+        left: 57px;
+      }
+
+      &-number {
+        top: 195px;
+        width: 407px;
+      }
+
+      &-name {
+        top: 243px;
+        width: 172px;
+      }
+
+      &-date {
+        top: 290px;
+        width: 75px;
+      }
     }
 
     &-summary {
